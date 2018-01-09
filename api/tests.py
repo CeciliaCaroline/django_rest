@@ -31,11 +31,11 @@ class ViewTestCase(TestCase):
 
     def setUp(self):
         """Define the test client and other test variables."""
-        user = user.objects.create(username="nerd")
+        user = User.objects.create(username="nerd")
 
         # Initialize client and force it to use authentication
         self.client = APIClient()
-        self.clent.force_authenticate(user=user)
+        self.client.force_authenticate(user=user)
 
         # Add user id to bucketlist data
         self.bucketlist_data = {'name': 'Go to Ibiza', 'owner': user.id}
@@ -69,7 +69,7 @@ class ViewTestCase(TestCase):
 
     def test_api_can_update_bucketlist(self):
         """Test the api can update a given bucketlist."""
-        bucketlist = self.response.data
+        # bucketlist = self.response.data
         bucketlist = Bucketlist.objects.get()
         change_bucketlist = {'name': 'Something new'}
         res = self.client.put(
