@@ -35,7 +35,10 @@ class ViewTestCase(TestCase):
 
         # Initialize client and force it to use authentication
         self.client = APIClient()
-        self.bucketlist_data = {'name': 'Go to Ibiza'}
+        self.clent.force_authenticate(user=user)
+
+        # Add user id to bucketlist data
+        self.bucketlist_data = {'name': 'Go to Ibiza', 'owner': user.id}
         self.response = self.client.post(
             reverse('create'),
             self.bucketlist_data,
