@@ -55,9 +55,11 @@ class ViewTestCase(TestCase):
         res = new_client.get('/bucketlists/', kwargs={'pk':3},
         format="json" )
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    
     def test_api_can_get_a_bucketlist(self):
         """Test the api can get a given bucketlist."""
-        bucketlist = Bucketlist.objects.get()
+        bucketlist = Bucketlist.objects.get(id=1)
         response = self.client.get(
             reverse('details',
             kwargs={'pk': bucketlist.id}), format="json")
@@ -68,9 +70,10 @@ class ViewTestCase(TestCase):
     def test_api_can_update_bucketlist(self):
         """Test the api can update a given bucketlist."""
         bucketlist = self.response.data
+        bucketlist = Bucketlist.objects.get()
         change_bucketlist = {'name': 'Something new'}
         res = self.client.put(
-            reverse('details', kwargs={'pk': bucketlist['id']}),
+            reverse('details', kwargs={'pk': bucketlist.id}),
             change_bucketlist, format='json'
         )
         self.assertEqual(res.status_code, status.HTTP_200_OK)
